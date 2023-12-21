@@ -1,6 +1,6 @@
-﻿@model LoginViewModel
+﻿@model RegisterViewModel
 @{
-    ViewData["Title"] = "login";
+    ViewData["Title"] = "Register";
 }
 
 <div class="row">
@@ -19,14 +19,21 @@
                 <input asp-for="Username" class=" form-control" placeholder="typehere" />
                 <span asp-validation-for="Username" class="text-danger small"> </span>
             </div>
+
             <div class="form-group mb-3">
                 <label asp-for="Password" class="form-group">Password</label>
                 <input asp-for="Password" type="password" class="form-control" placeholder="P@ssW0rd!" />
                 <span asp-validation-for="Password" class="text-danger small"> </span>
-
             </div>
+
+            <div class="form-group mb-3">
+                <label asp-for="RePassword" class="form-group">Re-Password</label>
+                <input asp-for="RePassword" type="password" class="form-control" placeholder="P@ssW0rd!" />
+                <span asp-validation-for="RePassword" class="text-danger small"> </span>
+            </div>
+
             <div class="forn-group d-grid mb-3">
-                <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-right-to-bracket me-2"></i>Login</button>
+                <button type="submit" class="btn btn-primary d-block"><i class="fa-solid fa-paper-plane me-2"></i>Register</button>
             </div>
         </form>
     </div>

@@ -1,3 +1,6 @@
+using ASPwebApp.Entities;
+using Microsoft.EntityFrameworkCore;
+
 namespace ASPwebApp
 {
     public class Program
@@ -7,7 +10,12 @@ namespace ASPwebApp
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
-            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();    
+            builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            builder.Services.AddDbContext<DatabaseContext>(opts =>
+            {
+                opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+                //opts.UseLazyLoadingProxies();
+            });
 
             var app = builder.Build();
 
