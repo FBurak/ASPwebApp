@@ -1,6 +1,8 @@
 ﻿using ASPwebApp.Entities;
 using ASPwebApp.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using NETCore.Encrypt.Extensions;
 
 namespace ASPwebApp.Controllers
 {
@@ -8,9 +10,12 @@ namespace ASPwebApp.Controllers
     public class AccountController : Controller
     {
         private readonly DatabaseContext _databaseContext;
-        public AccountController(DatabaseContext databaseContext)
+        private readonly IConfiguration _configuration;
+
+        public AccountController(DatabaseContext databaseContext, IConfiguration configuration)
         {
             _databaseContext = databaseContext;
+            _configuration = configuration;
         }
 
         public IActionResult Login()
@@ -38,10 +43,14 @@ namespace ASPwebApp.Controllers
         {
             if (ModelState.IsValid)
             {
+                string md5Salt = _configuration.GetValue<string>("AppSettings:MD5Salt");
+                string saltedPassword = model.Password + md5Salt;
+                string hashedPassword = saltedPassword.MD5();
+
                 User user = new()
                 {
                     Username = model.Username,
-                    Password = model.Password
+                    Password = hashedPassword
                 };
 
                 _databaseContext.Users.Add(user);
