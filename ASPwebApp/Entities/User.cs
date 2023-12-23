@@ -14,7 +14,7 @@ namespace ASPwebApp.Entities
 
         [Required]
         [StringLength(30)]
-        public string? Username { get; set; }
+        public string Username { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -23,5 +23,12 @@ namespace ASPwebApp.Entities
 
         public bool Locked { get; set; } = false;
         public DateTime CreatedAt { get; set; } = DateTime.Now;
+
+        [Required]
+        [StringLength(50)]
+        public String Role { get; set; } = "user";
+
+
+
     }
 }

@@ -1,5 +1,7 @@
 using ASPwebApp.Entities;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using System.Reflection;
 
 namespace ASPwebApp
 {
@@ -11,11 +13,24 @@ namespace ASPwebApp
 
             // Add services to the container.
             builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            builder.Services.AddAutoMapper(Assembly.GetExecutingAssembly());
             builder.Services.AddDbContext<DatabaseContext>(opts =>
             {
                 opts.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
                 //opts.UseLazyLoadingProxies();
             });
+
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                .AddCookie(opts =>
+                {
+                    opts.Cookie.Name = ".ASPwebApp.auth";
+                    opts.ExpireTimeSpan = TimeSpan.FromDays(14);
+                    opts.SlidingExpiration = false;
+                    opts.LoginPath = "/Account/Login";
+                    opts.LogoutPath = "/Account/Logout";
+                    opts.AccessDeniedPath = "/Home/AccessDenied";
+                });
+
 
             var app = builder.Build();
 
@@ -28,6 +43,7 @@ namespace ASPwebApp
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.MapControllerRoute(
