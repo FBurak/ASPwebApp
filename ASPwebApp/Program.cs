@@ -1,4 +1,5 @@
 using ASPwebApp.Entities;
+using ASPwebApp.Helpers;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using System.Reflection;
@@ -31,6 +32,7 @@ namespace ASPwebApp
                     opts.AccessDeniedPath = "/Home/AccessDenied";
                 });
 
+            builder.Services.AddScoped<IHasher, Hasher>();
 
             var app = builder.Build();
 

@@ -1,4 +1,5 @@
 ﻿using ASPwebApp.Entities;
+using ASPwebApp.Helpers;
 using ASPwebApp.Models;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -17,11 +18,13 @@ namespace ASPwebApp.Controllers
     {
         private readonly DatabaseContext _databaseContext;
         private readonly IConfiguration _configuration;
+        private readonly IHasher _hasher;
 
-        public AccountController(DatabaseContext databaseContext, IConfiguration configuration)
+        public AccountController(DatabaseContext databaseContext, IConfiguration configuration, IHasher hasher)
         {
             _databaseContext = databaseContext;
             _configuration = configuration;
+            _hasher = hasher;
         }
 
         [AllowAnonymous]
@@ -36,7 +39,7 @@ namespace ASPwebApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                string hashedPassword = DoMD5HashedString(model.Password);
+                string hashedPassword = _hasher.DoMD5HashedString(model.Password);
 
                 User user = _databaseContext.Users.SingleOrDefault(x => x.Username.ToLower() == model.Username.ToLower()
                 && x.Password == hashedPassword);
@@ -73,13 +76,7 @@ namespace ASPwebApp.Controllers
             return View(model);
         }
 
-        private string DoMD5HashedString(string s)
-        {
-            string md5Salt = _configuration.GetValue<string>("AppSettings:MD5Salt");
-            string salted = s + md5Salt;
-            string hashed = salted.MD5();
-            return hashed;
-        }
+        
 
         [AllowAnonymous]
         public IActionResult Register()
@@ -98,7 +95,7 @@ namespace ASPwebApp.Controllers
                     ModelState.AddModelError(nameof(model.Username), "Username is already exist.");
                 }
 
-                string hashedPassword = DoMD5HashedString(model.Password);
+                string hashedPassword = _hasher.DoMD5HashedString(model.Password);
 
                 User user = new()
                 {
@@ -150,14 +147,14 @@ namespace ASPwebApp.Controllers
         }
 
 
-        public IActionResult ProfileChangePassword([Required][MinLength(6)][MaxLength(16)] string? password)
+        public IActionResult ProfileChangePassword([Required][MinLength(3)][MaxLength(16)] string? password)
         {
             if (ModelState.IsValid)
             {
                 Guid userid = new Guid(User.FindFirstValue(ClaimTypes.NameIdentifier));
                 User user = _databaseContext.Users.SingleOrDefault(x => x.Id == userid);
 
-                string hashedPassword = DoMD5HashedString(password);
+                string hashedPassword = _hasher.DoMD5HashedString(password);
                 
                 user.Password = hashedPassword;
                 _databaseContext.SaveChanges();

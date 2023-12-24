@@ -11,7 +11,7 @@ namespace ASPwebApp.Models
 
         //[DataType(DataType.Password)]
         [Required(ErrorMessage = "Password is required/ Şifre gerekli.")]
-        [MinLength(6,ErrorMessage = "Password can be min 6 characters/ Şifre minimum 6 karakter uzunluğunda olmalı.")]
+        [MinLength(3,ErrorMessage = "Password can be min 3 characters/ Şifre minimum 3 karakter uzunluğunda olmalı.")]
         [MaxLength(16, ErrorMessage = "Password can be max 16 characters/ Şifre maksimum 16 karakter uzunluğunda olmalı.")]
         public string Password { get; set; }
 
