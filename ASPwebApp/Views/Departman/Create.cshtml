@@ -1,0 +1,15 @@
+﻿@model DepartmanModel
+@{
+    ViewData["Title"] = "Add Departman";
+}
+
+<h2>Add Departman </h2>
+<hr>
+
+<form asp-controller="Departman" asp-action="Create" method="post">
+    <div class="md-3">
+        <label asp-for="Name" class="form-label">Departman Name</label>
+        <input asp-for="Name" class="form-control"/>
+    </div>
+    <button type="submit" class="btn btn-secondary mt-2">Save</button>
+</form>

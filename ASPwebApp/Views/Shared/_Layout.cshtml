@@ -26,6 +26,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
                         </li>
+                        
 
                         @if (User.Identity.IsAuthenticated)
                         {
@@ -38,8 +39,11 @@
                                     </a>
                                     <ul class="dropdown-menu">
                                         <li><a asp-action="Index" asp-controller="User" class="dropdown-item" >Users</a></li>
+                                        <li><a asp-action="Create" asp-controller="Departman" class="dropdown-item">Departmans</a></li>
 
                                     </ul>
+                                    
+                                    
                                 </li>
                                 
                             }
