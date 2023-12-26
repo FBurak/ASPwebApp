@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using ASPwebApp.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ASPwebApp.Entities
@@ -27,6 +28,7 @@ namespace ASPwebApp.Entities
         [Required]
         [StringLength(50)]
         public String Role { get; set; } = "user";
+        public List<CalismaSaatleriModel> CalismaSaatleri { get; set; }
 
 
 
