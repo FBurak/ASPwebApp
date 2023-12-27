@@ -27,10 +27,7 @@ namespace ASPwebApp.Entities
 
         [Required]
         [StringLength(50)]
-        public String Role { get; set; } = "user";
-        public List<CalismaSaatleriModel> CalismaSaatleri { get; set; }
-
-
-
+        public String Role { get; set; } = "patient";
+        
     }
 }

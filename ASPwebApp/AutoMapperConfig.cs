@@ -11,6 +11,9 @@ namespace ASPwebApp
             CreateMap<User,UserModel>().ReverseMap();
             CreateMap<User,CreateUserModel>().ReverseMap();
             CreateMap<User,EditUserModel>().ReverseMap();
+            CreateMap<Doctor,DoctorModel>().ReverseMap();
+            CreateMap<Doctor,CreateDoctorModel>().ReverseMap();
+            CreateMap<Doctor,EditDoctorModel>().ReverseMap();
 
         }
     }

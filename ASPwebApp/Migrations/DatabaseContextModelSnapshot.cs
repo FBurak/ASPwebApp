@@ -22,130 +22,7 @@ namespace ASPwebApp.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("ASPwebApp.Entities.AnaBilimDali", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Aciklama")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Adi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AnaBilimDallari");
-                });
-
-            modelBuilder.Entity("ASPwebApp.Entities.CalismaSaatleri", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<TimeSpan>("BaslangicSaati")
-                        .HasColumnType("time");
-
-                    b.Property<TimeSpan>("BitisSaati")
-                        .HasColumnType("time");
-
-                    b.Property<int>("DoktorId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Gun")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoktorId");
-
-                    b.ToTable("CalismaSaatleri");
-                });
-
-            modelBuilder.Entity("ASPwebApp.Entities.Doktor", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Adi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("PoliklinikId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Soyadi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UzmanlikAlani")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PoliklinikId");
-
-                    b.ToTable("Doktorlar");
-                });
-
-            modelBuilder.Entity("ASPwebApp.Entities.Poliklinik", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<string>("Aciklama")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Adi")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("AnaBilimDaliId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AnaBilimDaliId");
-
-                    b.ToTable("Poliklinikler");
-                });
-
-            modelBuilder.Entity("ASPwebApp.Entities.Randevu", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("DoktorId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Tarih")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DoktorId");
-
-                    b.ToTable("Randevular");
-                });
+            
 
             modelBuilder.Entity("ASPwebApp.Entities.User", b =>
                 {
@@ -183,65 +60,43 @@ namespace ASPwebApp.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("ASPwebApp.Entities.CalismaSaatleri", b =>
+            modelBuilder.Entity("ASPwebApp.Entities.WorkingDay", b =>
                 {
-                    b.HasOne("ASPwebApp.Entities.Doktor", "Doktor")
-                        .WithMany("CalismaSaatleri")
-                        .HasForeignKey("DoktorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
 
-                    b.Navigation("Doktor");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("DayOfWeek")
+                        .HasColumnType("int");
+
+                    b.Property<Guid?>("DoctorId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<TimeSpan>("EndTime")
+                        .HasColumnType("time");
+
+                    b.Property<TimeSpan>("StartTime")
+                        .HasColumnType("time");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("DoctorId");
+
+                    b.ToTable("WorkingDay");
                 });
 
-            modelBuilder.Entity("ASPwebApp.Entities.Doktor", b =>
+            modelBuilder.Entity("ASPwebApp.Entities.WorkingDay", b =>
                 {
-                    b.HasOne("ASPwebApp.Entities.Poliklinik", "Poliklinik")
-                        .WithMany("Doktorlar")
-                        .HasForeignKey("PoliklinikId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Poliklinik");
+                    b.HasOne("ASPwebApp.Entities.Doctor", null)
+                        .WithMany("WorkingDays")
+                        .HasForeignKey("DoctorId");
                 });
 
-            modelBuilder.Entity("ASPwebApp.Entities.Poliklinik", b =>
+            modelBuilder.Entity("ASPwebApp.Entities.Doctor", b =>
                 {
-                    b.HasOne("ASPwebApp.Entities.AnaBilimDali", "AnaBilimDali")
-                        .WithMany("Poliklinikler")
-                        .HasForeignKey("AnaBilimDaliId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AnaBilimDali");
-                });
-
-            modelBuilder.Entity("ASPwebApp.Entities.Randevu", b =>
-                {
-                    b.HasOne("ASPwebApp.Entities.Doktor", "Doktor")
-                        .WithMany("Randevular")
-                        .HasForeignKey("DoktorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Doktor");
-                });
-
-            modelBuilder.Entity("ASPwebApp.Entities.AnaBilimDali", b =>
-                {
-                    b.Navigation("Poliklinikler");
-                });
-
-            modelBuilder.Entity("ASPwebApp.Entities.Doktor", b =>
-                {
-                    b.Navigation("CalismaSaatleri");
-
-                    b.Navigation("Randevular");
-                });
-
-            modelBuilder.Entity("ASPwebApp.Entities.Poliklinik", b =>
-                {
-                    b.Navigation("Doktorlar");
+                    b.Navigation("WorkingDays");
                 });
 #pragma warning restore 612, 618
         }
