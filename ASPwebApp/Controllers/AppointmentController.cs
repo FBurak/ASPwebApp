@@ -1,9 +1,11 @@
 ﻿using ASPwebApp.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASPwebApp.Controllers
 {
+    [Authorize]
     public class AppointmentController : Controller
     {
         private readonly DatabaseContext _databaseContext;
