@@ -2,10 +2,12 @@
 using ASPwebApp.Helpers;
 using ASPwebApp.Models;
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ASPwebApp.Controllers
 {
+    [Authorize(Roles = "admin")]
     public class UserController : Controller
     {
         private readonly DatabaseContext _databaseContext;

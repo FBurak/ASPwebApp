@@ -1,7 +1,4 @@
-﻿using ASPwebApp.Models;
-using HospitalAppointmentSystem.Models;
-using Microsoft.EntityFrameworkCore;
-using System.Numerics;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace ASPwebApp.Entities
 {
@@ -13,10 +10,8 @@ namespace ASPwebApp.Entities
         }
 
         public DbSet<User> Users { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }    
 
-        public DbSet<Doctor> Doctors { get; set; }
-
-     
 
     }
     
