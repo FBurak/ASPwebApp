@@ -12,6 +12,8 @@ namespace ASPwebApp.Entities
         public DbSet<User> Users { get; set; }
         public DbSet<Appointment> Appointments { get; set; }    
 
+        public DbSet<Makeapm> Makeapms { get; set; }
+
 
     }
     

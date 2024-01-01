@@ -28,6 +28,8 @@ namespace ASPwebApp.Entities
         [Required]
         [StringLength(50)]
         public String Role { get; set; } = "patient";
+
+        public ICollection<Makeapm> MakeApms { get; set; } = new List<Makeapm>();
         
     }
 }

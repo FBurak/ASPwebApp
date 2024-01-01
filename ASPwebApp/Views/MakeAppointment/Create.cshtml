@@ -1,0 +1,19 @@
+﻿@model Makeapm
+
+<h2>Create Making Appointment</h2>
+<hr />
+<form asp-controller="Makeapm" asp-action="Create" method="post">
+    <div class="mb-3">
+        <label asp-for="Id" class="form-label">Patient</label>
+        <select asp-for="Id" asp-items="ViewBag.Users" class="form-control"></select>
+        <option value="">Please Select</option>
+    </div>
+    <div class="mb-3">
+        <label asp-for="AppId" class="form-label">Appointment</label>
+        <select asp-for="AppId" asp-items="ViewBag.Appointments" class="form-control"></select>
+        <option value="">Please Select</option>
+
+    </div>
+    <button type="submit" class="btn btn-secondary">Save</button>
+
+</form>

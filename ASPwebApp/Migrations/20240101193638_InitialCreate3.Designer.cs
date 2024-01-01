@@ -4,6 +4,7 @@ using ASPwebApp.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ASPwebApp.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20240101193638_InitialCreate3")]
+    partial class InitialCreate3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -49,23 +51,13 @@ namespace ASPwebApp.Migrations
                     b.Property<int>("AppId")
                         .HasColumnType("int");
 
-                    b.Property<int>("AppointmentAppId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("AppointmentMakeTime")
                         .HasColumnType("datetime2");
 
                     b.Property<Guid>("Id")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.HasKey("MakeId");
-
-                    b.HasIndex("AppointmentAppId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Makeapms");
                 });
@@ -104,25 +96,6 @@ namespace ASPwebApp.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("ASPwebApp.Entities.Makeapm", b =>
-                {
-                    b.HasOne("ASPwebApp.Entities.Appointment", "Appointment")
-                        .WithMany()
-                        .HasForeignKey("AppointmentAppId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("ASPwebApp.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Appointment");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
